@@ -1,0 +1,23 @@
+- name: Deploy to K8s Cluster
+  hosts: localhost
+  become: no
+
+  tasks:
+  - name: Docker pull
+    shell:
+      cmd: docker pull da9104/server:1
+
+  - name: Deploy Pod
+    shell:
+      cmd: kubectl create deployment server-app --image=da9104/server:latest
+
+  - name: Deploy Service
+    shell:
+      cmd: kubectl apply -f service.yaml
+
+  - name: Deploy Scale
+    shell:
+      cmd: kubectl scale deployments/server-app --replicas=4
+
+
+
